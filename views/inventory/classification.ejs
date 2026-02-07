@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head") %>
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" media="screen" href="/css/classification.css">
+
+<body>
+    <div id="wrapper">
+        <%- include("../partials/header") %>
+        <%- include("../partials/navigation") %>
+
+        <main>
+
+            <% if (title) {%>
+            <h1><%= title %></h1>
+            <% } else {
+                res.redirect("/")
+            } %>
+
+            <%# message() %>
+
+            <%- grid %>
+
+        </main>
+
+        <%- include("../partials/footer") %>
+    </div>
+</body>
+</html>

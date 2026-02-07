@@ -1,0 +1,50 @@
+section {
+    margin: 20px;
+}
+
+h1 {
+    font-size: larger;
+    text-align: center;
+}
+
+.vehicle-detail {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+p {
+    padding: 10px;
+    font-size: large;
+    margin-top: 10px;
+}
+
+.price, .color {
+    background-color: rgb(222, 221, 221);
+    border-radius: 5px;
+}
+
+@media (min-width: 600px) {
+    .vehicle-detail {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    img {
+        width: 50%;
+        height: 50%;
+    }
+}
