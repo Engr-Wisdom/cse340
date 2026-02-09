@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head") %>
+<link rel="stylesheet" media="screen" href="/css/account.css">
+
+<body>
+    <div id="wrapper">
+        <%- include("../partials/header") %>
+        <%- include("../partials/navigation") %>
+
+        <main>
+            <h1><%= title %></h1>
+
+            <%- messages() %>
+
+            <% if (typeof errors !== "undefined" && errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            <% } %>
+
+            <form action="">
+                <label for="account_email">Email *</label>
+                <input type="emal" name="account_email" required>
+
+                <label for="account_password">Password *</label>
+                <span>
+                    Password must be miimum of 12 charactersand include 1 capital letter 1 number 1 special character
+                </span>
+                <input type="password" name="account_password" id="password" required>
+
+                <button type="button" id="passwordBtn">Show Password</button>
+                <button type="submit">Login</button>
+                <hr>
+
+                <p>
+                    No account? <a href="/account/register">Sign-up</a>
+                </p>
+            </form>
+        </main>
+
+        <%- include("../partials/footer") %>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

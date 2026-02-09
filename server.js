@@ -2,16 +2,17 @@ const express = require("express")
 require("dotenv").config()
 const session = require("express-session")
 const pool = require("./database/")
+const bodyParser = require("body-parser")
 const app = express()
 
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
 
-/* ***********************
- * Routes
- *************************/
-app.use(require("./routes/static"));
-app.use("/inv", require("./routes/inventoryRoute"))
+/* **********************
+* Middleware
+********************** */
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(session({
   store: new (require('connect-pg-simple')(session)) ({
@@ -29,6 +30,13 @@ app.use(function(req, res, next) {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+/* ***********************
+ * Routes
+ *************************/
+app.use(require("./routes/static"));
+app.use("/inv", require("./routes/inventoryRoute"))
+app.use("/account", require("./routes/accountRoute"))
 
 const expressLayouts = require("express-ejs-layouts");
 

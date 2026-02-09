@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head") %>
+<link rel="stylesheet" media="screen" href="/css/account.css">
+
+<body>
+    <div id="wrapper">
+        <%- include("../partials/header") %>
+        <%- include("../partials/navigation") %>
+
+        <main>
+            <h1><%= title %></h1>
+
+            <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            <% } %>
+
+            <form action="/inv/add-classification" method="post">
+                <label for="inv_make">Make *</label>
+                <input type="text" name="inv_make" required>
+
+                <label for="inv_model">Model *</label>
+                <input type="text" name="inv_model" required>
+
+                <label for="inv_make">Make *</label>
+                <input type="text" name="inv_make" required>
+
+                <label for="inv_description">Make *</label>
+                <textarea type="text" name="inv_description" required></textarea>
+
+                <label for="inv_image">Image Path *</label>
+                <input type="image" name="inv_image" required>
+
+                <label for="inv_thumbnail">Thumbnail Path *</label>
+                <input type="image" name="inv_thumbnail" required>
+
+                <label for="inv_price">Price *</label>
+                <input type="number" name="inv_price" required>
+
+                <label for="inv_year">Year *</label>
+                <input type="year" name="inv_year" required>
+
+                <label for="inv_miles">Miles *</label>
+                <input type="number" name="inv_miles" required>
+
+                <label for="inv_color">Make *</label>
+                <input type="text" name="inv_color" required>
+
+                <button type="submit">Add inventory</button>
+            </form>
+        </main>
+
+        <%- include("../partials/footer") %>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

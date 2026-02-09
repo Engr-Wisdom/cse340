@@ -43,7 +43,7 @@ header a {
 
 nav ul {
   /* background-color: rgb(40, 40, 40); */
-  background-color: blue;
+  background-color: #0a3076;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

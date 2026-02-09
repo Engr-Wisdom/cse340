@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head") %>
+<link rel="stylesheet" media="screen" href="/css/account.css">
+
+<body>
+    <div id="wrapper">
+        <%- include("../partials/header") %>
+        <%- include("../partials/navigation") %>
+
+        <main>
+            <h1><%= title %></h1>
+
+            <%- messages() %>
+
+            <% if (typeof errors !== "undefined" && errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+            <% } %>
+
+            <form action="/account/register" method="post">
+                <label for="account_firstname">First name *</label>
+                <input type="text" name="account_firstname" required>
+
+                <label for="account_lastname">Last name *</label>
+                <input type="text" name="account_lastname" required>
+                
+                <label for="account_email">Email *</label>
+                <input type="email" name="account_email" required placeholder="Enter a valid email address">
+
+                <label for="account_password">Password *</label>
+                <span>
+                    Password must be miimum of 12 charactersand include 1 capital letter 1 number 1 special character
+                </span>
+                <input type="password" name="account_password" id="password" required 
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+
+                <button type="button" id="passwordBtn">Show Password</button>
+                <button type="submit">Register</button>
+                <hr>
+
+                <p>
+                    No account? <a href="/account/register">Sign-up</a>
+                </p>
+            </form>
+        </main>
+
+        <%- include("../partials/footer") %>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
