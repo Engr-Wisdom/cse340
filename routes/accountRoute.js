@@ -9,7 +9,7 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
 router.post(
-    "/register", 
+    "/register",
     regValidate.registrationRules(),
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount),

@@ -1,1 +1,1 @@
-SELECT * FROM inventory
+SELECT * FROM inventory WHERE inv_make = 'Tesla';

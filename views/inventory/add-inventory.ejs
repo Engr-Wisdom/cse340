@@ -21,36 +21,35 @@
                 </ul>
             <% } %>
 
-            <form action="/inv/add-classification" method="post">
+            <form action="/inv/add-inventory" method="post">
+                <%- classificationList %>
+
                 <label for="inv_make">Make *</label>
-                <input type="text" name="inv_make" required>
+                <input type="text" name="inv_make" value="<%= inv_make || "" %>" required>
 
                 <label for="inv_model">Model *</label>
-                <input type="text" name="inv_model" required>
+                <input type="text" name="inv_model" value="<%= inv_model || "" %>" required>
 
-                <label for="inv_make">Make *</label>
-                <input type="text" name="inv_make" required>
-
-                <label for="inv_description">Make *</label>
+                <label for="inv_description">Description *</label>
                 <textarea type="text" name="inv_description" required></textarea>
 
                 <label for="inv_image">Image Path *</label>
-                <input type="image" name="inv_image" required>
+                <input type="image" name="inv_image" value="<%= inv_image || "" %>" required>
 
                 <label for="inv_thumbnail">Thumbnail Path *</label>
-                <input type="image" name="inv_thumbnail" required>
+                <input type="image" name="inv_thumbnail" value="<%= inv_thumbnail || "" %>" required>
 
                 <label for="inv_price">Price *</label>
-                <input type="number" name="inv_price" required>
+                <input type="number" name="inv_price" value="<%= inv_price || "" %>" required>
 
                 <label for="inv_year">Year *</label>
-                <input type="year" name="inv_year" required>
+                <input type="year" name="inv_year" value="<%= inv_year || "" %>" required>
 
                 <label for="inv_miles">Miles *</label>
-                <input type="number" name="inv_miles" required>
+                <input type="number" name="inv_miles" value="<%= inv_miles || "" %>" required>
 
-                <label for="inv_color">Make *</label>
-                <input type="text" name="inv_color" required>
+                <label for="inv_color">Color *</label>
+                <input type="text" name="inv_color" value="<%= inv_color || "" %>" required>
 
                 <button type="submit">Add inventory</button>
             </form>

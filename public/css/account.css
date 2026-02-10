@@ -41,12 +41,16 @@ label, span {
     color: white;
 }
 
-input {
+input, textarea, select {
     width: 100%;
     padding: 10px;
     font-size: 15px;
     border-radius: 5px;
     outline: none;
+}
+
+textarea {
+    height: 200px
 }
 
 button {
