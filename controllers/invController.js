@@ -105,4 +105,36 @@ invCont.buildAddInventory = async (req, res, next) => {
     })
 }
 
+invCont.addInventory = async (req, res, next) => {
+    const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body;
+    const result = await invModel.addInventory(
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color
+    )
+    const nav = await utilities.getNav()
+
+    if (result) {
+        req.flash("notice", `${inv_make} added successfully.`)
+        res.render("inventory/management", {
+            title: "Inventory Management",
+            nav,
+        })
+    } else {
+        req.flash("notice", "Failed to add Inventory")
+        res.render("inventory/add-inventory", {
+            title: "Add Inventory",
+            nav,
+            errors: null,
+        })
+    }
+}
+
 module.exports = invCont
