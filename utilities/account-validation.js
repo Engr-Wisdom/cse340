@@ -3,6 +3,56 @@ const { body, validationResult } = require("express-validator")
 const validate = {}
 
 /* *********************
+* Login Data Validation Rules
+********************* */
+
+validate.loginRules = () => {
+    return [
+        body("account_email")
+        .trim()
+        .notEmpty()
+        .escape()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("Invalid email address"),
+
+
+        body("account_password")
+        .trim()
+        .notEmpty()
+        .isStrongPassword({
+            minLength: 12,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        })
+        .withMessage("Invalid password")
+    ]
+}
+
+/* ************************
+* Check data and return errors or continue to registration
+************************ */
+
+validate.checkLoginData = async (req, res, next) => {
+    const { account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("account/login", {
+            title: "Login",
+            nav,
+            errors,
+            account_email,
+        })
+        return
+    } 
+    next()
+}
+
+/* *********************
 * Registration Data Validation Rules
 ********************* */
 
@@ -50,7 +100,7 @@ validate.registrationRules = () => {
 ************************ */
 
 validate.checkRegData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email, account_password } = req.body
+    const { account_firstname, account_lastname, account_email } = req.body
     let errors = []
     errors = validationResult(req)
     if (!errors.isEmpty()) {

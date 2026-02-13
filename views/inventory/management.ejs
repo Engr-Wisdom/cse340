@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("../partials/head") %>
-<link rel="stylesheet" media="screen" href="/css/account.css">
+<link rel="stylesheet" media="screen" href="/css/inventory.css">
 
 <body>
     <div id="wrapper">
@@ -9,18 +9,30 @@
         <%- include("../partials/navigation") %>
 
         <main>
-            <h1><%= title %></h1>
+            <h1><%= title %></h1><br>
 
             <%- messages() %>
 
 
-            <a href="/inv/add-classification">Add New Classification</a>
-            <a href="/inv/add-inventory">Add New Vehicle</a>
+            <a href="/inv/add-classification">Add New Classification</a><br><br>
+            <a href="/inv/add-inventory">Add New Vehicle</a><br><br>
+
+            <div>
+                <h2>Manage Inventory</h2><br>
+                <p>Select a classification from the list</p><br>
+
+                <%- classificationList %>
+
+                <table id="inventoryDisplay">
+                    <noscript>Javascript must be enable to use this page.</noscript>
+                </table>
+            </div>
         </main>
 
         <%- include("../partials/footer") %>
     </div>
 
     <script src="/js/script.js"></script>
+    <script src="/js/inventory.js"></script>
 </body>
 </html>

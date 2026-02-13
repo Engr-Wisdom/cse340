@@ -21,7 +21,7 @@
                 </ul>
             <% } %>
 
-            <form action="/inv/add-inventory" method="post">
+            <form action="/inv/update" method="post">
                 <%- classificationList %>
 
                 <label for="inv_make">Make *</label>
@@ -51,13 +51,17 @@
                 <label for="inv_color">Color *</label>
                 <input type="text" name="inv_color" value="<%= inv_color || "" %>" required>
 
-                <button type="submit">Add Vehicle</button>
+                <button type="submit">Update Vehicle</button>
+
+                <input type="hidden" name="inv_id" <% if (locals.inv_id) { %>
+                    value="<% locals.inv_id %>"
+                <% } %>>
             </form>
         </main>
 
         <%- include("../partials/footer") %>
     </div>
 
-    <script src="/js/script.js"></script>
+    <script src="/js/inv-update.js"></script>
 </body>
 </html>

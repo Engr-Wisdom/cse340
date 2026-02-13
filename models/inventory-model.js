@@ -46,17 +46,87 @@ async function addClassification(classification_name) {
         return false
     }
 }
-async function addInventory(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) {
+
+async function addInventory(
+    classification_id, 
+    inv_make, 
+    inv_model, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_year, 
+    inv_miles, 
+    inv_color
+) {
     try {
         const sql = `
-            INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) 
-            VALUES ($1 $2 $3 $4 $5 $6 $7 $8 $9 $10) RETURNING *
+            INSERT INTO inventory (
+                classification_id, inv_make, inv_model, inv_description, inv_image,
+                inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
+            ) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING *
         `
-        await pool.query(sql, [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color])
-        return true
+        const result = await pool.query(sql, [
+            classification_id, inv_make, inv_model, inv_description, inv_image,
+            inv_thumbnail, inv_price, inv_year, inv_miles, inv_color
+        ])
+        return result.rows[0]  // you can return the inserted row if you want
     } catch(error) {
+        console.error("addInventory error:", error)
         return false
     }
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory }
+async function updateInventory(
+    inv_id,
+    inv_make, 
+    inv_model, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_year, 
+    inv_miles, 
+    inv_color,
+    classification_id,
+) {
+    try {
+        const sql = `
+            INSERT INTO inventory (
+                inv_id, inv_make, inv_model, inv_description, inv_image,
+                inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
+            ) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+            RETURNING *
+        `
+        const result = await pool.query(sql, [
+            inv_make, inv_model, inv_description, inv_image, inv_thumbnail, 
+            inv_price, inv_year, inv_miles, inv_color, classification_id, inv_id,
+        ])
+        return result.rows[0]  // you can return the inserted row if you want
+    } catch(error) {
+        console.error("updateInventory error:", error)
+        return false
+    }
+}
+
+async function deleteInventory(inv_id) {
+    try {
+        return await pool.query("DELETE FROM inventory WHERE inv_id = $1", [inv_id])
+
+    } catch(error) {
+        new Error("Delete Inventory Error")
+    }
+}
+
+module.exports = { 
+    getClassifications, 
+    getInventoryByClassificationId, 
+    getInventoryById, 
+    addClassification, 
+    addInventory, 
+    updateInventory, 
+    deleteInventory 
+}

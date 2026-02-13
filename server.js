@@ -1,12 +1,12 @@
 const express = require("express")
 require("dotenv").config()
+const baseController = require("./controllers/baseController")
+const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require("./database/")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 const app = express()
-
-const baseController = require("./controllers/baseController")
-const utilities = require("./utilities/")
 
 /* **********************
 * Middleware
@@ -30,6 +30,10 @@ app.use(function(req, res, next) {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+app.use(cookieParser())
+
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * Routes
@@ -75,7 +79,7 @@ app.use(async (err, req, res, next) => {
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT
+const port = process.env.PORT 
 const host = process.env.HOST
 
 

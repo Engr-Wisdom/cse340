@@ -78,7 +78,7 @@ validate.inventoryRules = () => {
     ]
 }
 
-validate.checkInventoryData = async () => {
+validate.checkInventoryData = async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         const nav = await utilities.getNav()
@@ -90,9 +90,79 @@ validate.checkInventoryData = async () => {
             errors,
             ...req.body
         })
-
-        next()
     }
+    next()
+}
+
+validate.newInventoryRules = () => {
+  return [
+    body("classification_id")
+    .notEmpty()
+    .withMessage("Please select a classification."),
+
+    body("inv_make")
+    .trim()
+    .notEmpty()
+    .withMessage("Make is required."),
+
+    body("inv_model")
+    .trim()
+    .notEmpty()
+    .withMessage("Model is required"),
+
+    body("inv_description")
+    .trim()
+    .notEmpty()
+    .withMessage("Description is required"),
+
+    body("inv_image")
+    .trim()
+    .notEmpty()
+    .withMessage("Image is required"),
+
+    body("inv_thumbnail")
+    .trim()
+    .notEmpty()
+    .withMessage("Thumbnail is required"),
+
+    body("inv_price")
+    .trim()
+    .notEmpty()
+    .withMessage("Price is require"),
+
+    body("inv_year")
+    .trim()
+    .notEmpty()
+    .withMessage("Year is required"),
+
+    body("inv_miles")
+    .trim()
+    .notEmpty()
+    .withMessage("Miles is required"),
+
+    body("inv_color")
+    .trim()
+    .notEmpty()
+    .withMessage()
+  ]
+}
+
+validate.checkUpdateData = async (req, res, next) => {
+    const errors = validationResult(req)
+    const { inv_id } = req.body;
+    if (!errors.isEmpty()) {
+        const nav = await utilities.getNav()
+        const classificationList = await utilities.buildClassificationList(req.body.classification_id)
+        return res.render("inventory/update-inventory", {
+            title: "Update Inventory",
+            nav,
+            classificationList,
+            inv,
+            errors,
+            ...req.body
+        })
+    }
+    next()
 }
 
 module.exports = validate

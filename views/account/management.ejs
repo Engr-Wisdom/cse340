@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("../partials/head") %>
-<link rel="stylesheet" media="screen" href="/css/inventory.css">
+<link rel="stylesheet" media="screen" href="/css/account.css">
 
 <body>
     <div id="wrapper">
@@ -13,7 +13,7 @@
 
             <%- messages() %>
 
-            <% if (errors) { %>
+            <% if (typeof errors !== "undefined" && errors) { %>
                 <ul class="notice">
                     <% errors.array().forEach(error => { %>
                         <li><%= error.msg %></li>
@@ -21,18 +21,11 @@
                 </ul>
             <% } %>
 
-            <form action="/inv/add-classification" method="post">
-                <label for="Classification_name">Classification name *</label>
-                <input type="text" name="classification_name" pattern="^[A-Za-z0-9]+$" required>
-
-                <span>No space or special character</span>
-                <button type="submit">Add Classification</button>
-            </form>
+            <h2>You're logged in</h2>
         </main>
 
         <%- include("../partials/footer") %>
     </div>
-
     <script src="/js/script.js"></script>
 </body>
 </html>

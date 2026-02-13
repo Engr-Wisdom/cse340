@@ -25,7 +25,7 @@ ul.notice.success {
 
 form {
     background-color: #0a3076;
-    max-width: 400px;
+    max-width: 500px;
     margin: auto;
     border-radius: 5px;
     padding: 20px;
@@ -41,7 +41,8 @@ label, span {
     color: white;
 }
 
-input {
+select, input, textarea {
+    max-width: 500px;
     width: 100%;
     padding: 10px;
     font-size: 15px;
@@ -50,10 +51,11 @@ input {
 }
 
 textarea {
-    height: 200px
+    height: 150px;
 }
 
 button {
+    background-color: green;
     width: 100%;
     border-radius: 5px;
     padding: 10px;
@@ -66,30 +68,6 @@ button {
     color: white;
 }
 
-button[type="button"] {
-    background-color: #e69500;
-}
-
-button[type="button"]:hover {
-    background-color: #ee9e2e;
-}
-
-button[type="submit"] {
-    background-color: green;
-}
-
-button[type="submit"]:hover {
+button:hover {
     background-color: #018c01;
-}
-
-p {
-    margin-top: 10px;
-    text-align: center;
-    color: white;
-}
-
-p a {
-    color: orange;
-    text-decoration: none;
-    text-decoration: none;
 }
