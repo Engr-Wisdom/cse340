@@ -10,7 +10,7 @@ router.get("/", utilities.handleErrors(invCont.buildManagement))
 router.get("/add-classification", utilities.handleErrors(invCont.buildAddClassification))
 router.get("/add-inventory", utilities.handleErrors(invCont.buildAddInventory))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invCont.getInventoryJSON))
-router.get("/update/:inventory_id", utilities.handleErrors(invCont.updateInventory))
+router.get("/update/:inventory_id", utilities.handleErrors(invCont.buildUpdateInventory))
 router.get("/:inv_id", utilities.handleErrors(invCont.buildDeleteInventory))
 
 router.post(

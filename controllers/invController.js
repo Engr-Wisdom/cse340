@@ -25,7 +25,7 @@ invCont.buildByClassificationId = async (req, res, next) => {
 
 invCont.buildInventoryDetail = async (req, res, next) => {
     try {
-        const inventory_id = req.params.inventoryId
+        const inventory_id = parseInt(req.params.inventoryId)
         const vehicle = await invModel.getInventoryById(inventory_id)
 
         if (!vehicle) {
@@ -128,10 +128,15 @@ invCont.addInventory = async (req, res, next) => {
 
     if (result) {
         req.flash("notice", `${inv_make} added successfully.`)
+        const classificationList = await utilities.buildClassificationList()
+
         res.render("inventory/management", {
             title: "Inventory Management",
             nav,
+            classificationList,
+            errors: null
         })
+
     } else {
         req.flash("notice", "Failed to add Inventory")
         res.render("inventory/add-inventory", {
@@ -152,9 +157,9 @@ invCont.getInventoryJSON = async (req, res, next) => {
     }
 }
 
-invCont.updateInventory = async (req, res, next) => {
+invCont.buildUpdateInventory = async (req, res, next) => {
     const inv_id = parseInt(req.params.inv_id)
-    const nav = utilities.getNav()
+    const nav = await utilities.getNav()
     const itemData = await invModel.getInventoryById(inv_id)
     const classificationList = await utilities.buildClassificationList(itemData.classification_id)
     const itemsName = `${itemData.inv_make} ${itemData.inv_model}`
@@ -234,7 +239,7 @@ invCont.updateInventory = async (req, res, next) => {
     }
 }
 
-invCont.buildDeleteInventory = async (res, req, next) => {
+invCont.buildDeleteInventory = async (req, res, next) => {
     const nav = await utilities.getNav()
     const inv_id = parseInt(req.params.inv_id)
     const itemData = await invModel.getInventoryById(inv_id)
@@ -248,11 +253,11 @@ invCont.buildDeleteInventory = async (res, req, next) => {
 }
 
 invCont.deleteInventory = async (req, res, next) => {
-    const { inv_id } = req.body;
-    const result = await invModel.deleteInventory(inv_id)
+    const inv_id = parseInt(req.params.inv_id);
     const nav = await utilities.getNav()
-    const itemData = parseInt(req.params.inv_id)
+    const itemData = await invModel.getInventoryById(inv_id)
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+    const result = await invModel.deleteInventory(inv_id)
 
     if (result) {
         req.flash("notice", `${itemName} deleted successfully.`)
