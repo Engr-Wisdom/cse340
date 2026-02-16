@@ -39,10 +39,10 @@
                 <textarea name="inv_description" required><%= inv_description || "" %></textarea>
 
                 <label for="inv_image">Image Path *</label>
-                <input type="text" name="inv_image" value="<%= inv_image || "" %>" required>
+                <input type="text" name="inv_image" value="<%= inv_image || "" %>">
 
                 <label for="inv_thumbnail">Thumbnail Path *</label>
-                <input type="text" name="inv_thumbnail" value="<%= inv_thumbnail || "" %>" required>
+                <input type="text" name="inv_thumbnail" value="<%= inv_thumbnail || "" %>">
 
                 <label for="inv_price">Price *</label>
                 <input type="number" name="inv_price" value="<%= inv_price || "" %>" required>
@@ -51,7 +51,7 @@
                 <input type="number" name="inv_year" value="<%= inv_year || "" %>" required>
 
                 <label for="inv_miles">Miles *</label>
-                <input type="number" name="inv_miles" value="<%= inv_miles || "" %>" required>
+                <input type="number" name="inv_miles" min="1" value="<%= inv_miles || "" %>" required>
 
                 <label for="inv_color">Color *</label>
                 <input type="text" name="inv_color" value="<%= inv_color || "" %>" required>

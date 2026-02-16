@@ -99,8 +99,8 @@ invCont.buildAddInventory = async (req, res, next) => {
         inv_make: "",
         inv_model: "",
         inv_description: "",
-        inv_image: "images/vehicles/no-image.png",
-        inv_thumbnail: "images/vehicles/no-image.png",
+        inv_image: "/images/vehicles/no-image.png",
+        inv_thumbnail: "/images/vehicles/no-image.png",
         inv_price: "",
         inv_year: "",
         inv_miles: "",
@@ -118,7 +118,7 @@ invCont.addInventory = async (req, res, next) => {
     }
 
     if (!inv_thumbnail || inv_thumbnail.trim() === "") {
-        inv_thumbnail = "/images/vehicles/no-image.png"
+        inv_thumbnail = "/images/vehicles/no-image-tn.png"
     }
 
     const result = await invModel.addInventory(
@@ -189,61 +189,75 @@ invCont.buildUpdateInventory = async (req, res, next) => {
 }
 
 invCont.updateInventory = async (req, res, next) => {
-    const {
-        inv_id,
-        inv_make, 
-        inv_model, 
-        inv_description,
-        inv_image,
-        inv_thumbnail, 
-        inv_price, 
-        inv_year, 
-        inv_miles, 
-        inv_color, 
-        classification_id 
-    } = req.body;
-    const result = await invModel.updateInventory(
-        inv_id,
-        inv_make,
-        inv_model,
-        inv_description,
-        inv_image,
-        inv_thumbnail,
-        inv_price,
-        inv_year,
-        inv_miles,
-        inv_color,
-        classification_id
-    )
+  try {
+    let {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    } = req.body
+
     const nav = await utilities.getNav()
 
+    inv_image = inv_image && inv_image.trim() !== "" ? inv_image : "/images/vehicles/no-image.png"
+
+    inv_thumbnail = inv_thumbnail && inv_thumbnail.trim() !== "" ? inv_thumbnail : "/images/vehicles/no-image-tn.png"
+
+    const result = await invModel.updateInventory(
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    )
+
     if (result) {
-        const itemName = `${result.inv_make} ${result.inv_model}`
-        req.flash("notice", `${itemName} was successfully updated.`)
-        res.redirect("/inv/")
-    } else {
-        const classificationList = await utilities.buildClassificationList(classification_id)
-        const itemName = `${inv_make} ${inv_model}`
-        req.flash("notice", "sorry the insert failed")
-        res.status(501).render("inventory/update-inventory", {
-            title: "Update " + itemName,
-            nav,
-            classificationList: classificationList,
-            errors: null,
-            inv_id,
-            inv_make,
-            inv_model,
-            inv_description,
-            inv_image,
-            inv_thumbnail,
-            inv_price,
-            inv_year,
-            inv_miles,
-            inv_color,
-            classification_id,  
-        })
+      const itemName = `${inv_make} ${inv_model}`
+      req.flash("notice", `${itemName} was successfully updated.`)
+
+      return res.redirect("/inv/")
     }
+
+    const classificationList = await utilities.buildClassificationList(classification_id)
+
+    req.flash("notice", "Update failed. Please try again.")
+
+    res.status(501).render("inventory/update-inventory", {
+      title: `Update ${inv_make} ${inv_model}`,
+      nav,
+      classificationList,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    })
+
+  } catch (error) {
+    next(error)
+  }
 }
+
 
 invCont.buildDeleteInventory = async (req, res, next) => {
     const nav = await utilities.getNav()

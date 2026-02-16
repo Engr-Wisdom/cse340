@@ -101,7 +101,7 @@ async function buildUpdateAccount(req, res, next) {
 
         if (account_id !== res.locals.accountData.account_id) {
             req.flash("notice", "You can only update your own account")
-            return res.redirect("/account/management")
+            return res.redirect("/account/")
         }
 
         const accountData = await accountModel.getAccountById(account_id)
@@ -129,7 +129,7 @@ async function updateAccount(req, res, next) {
 
         if (parsedId !== res.locals.accountData.account_id) {
             req.flash("notice", "You can only update your own account")
-            return res.redirect("/account/management")
+            return res.redirect("/account/")
         }
 
         const updateResult = await accountModel.updateAccount(parsedId, account_firstname, account_lastname, account_email)
@@ -147,7 +147,7 @@ async function updateAccount(req, res, next) {
             res.cookie("jwt", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
 
             req.flash("notice", "Account information updated successfully")
-            res.redirect("/account/management")
+            res.redirect("/account/")
 
         } else {
             req.flash("notice", "Updated failed. Please try again.")
@@ -166,7 +166,7 @@ async function changePassword(req, res, next) {
 
         if (parseId !== res.locals.accountData.account_id) {
             req.flash("notice", "You can only change your own password")
-            res.redirect("/account/management")
+            res.redirect("/account/")
         }
 
         const hashedPassword = await bcrypt.hash(account_password, 10)
@@ -174,7 +174,7 @@ async function changePassword(req, res, next) {
 
         if (updateResult) {
             req.flash("notice", "Password changed successfully")
-            res.redirect("/account/management")
+            res.redirect("/account/")
 
         } else {
             req.flash("notice", "Password change failed. Please try again.")

@@ -46,18 +46,7 @@ validate.inventoryRules = () => {
         .notEmpty()
         .withMessage("Description is required"),
 
-        body("inv_image")
-        .trim()
-        .notEmpty()
-        .withMessage("Image is required"),
-
-        body("inv_thumbnail")
-        .trim()
-        .notEmpty()
-        .withMessage("Thumbnail is required"),
-
         body("inv_price")
-        .trim()
         .isFloat({ min: 1 })
         .withMessage("Price is require"),
 
@@ -69,12 +58,12 @@ validate.inventoryRules = () => {
         body("inv_miles")
         .trim()
         .isInt({ min: 1 })
-        .withMessage("Miles is required"),
+        .withMessage("Mileage must be 0 or greater"),
 
         body("inv_color")
         .trim()
         .notEmpty()
-        .withMessage()
+        .withMessage("Color is required")
     ]
 }
 
@@ -115,19 +104,8 @@ validate.newInventoryRules = () => {
     .notEmpty()
     .withMessage("Description is required"),
 
-    body("inv_image")
-    .trim()
-    .notEmpty()
-    .withMessage("Image is required"),
-
-    body("inv_thumbnail")
-    .trim()
-    .notEmpty()
-    .withMessage("Thumbnail is required"),
-
     body("inv_price")
-    .trim()
-    .notEmpty()
+    .isFloat({ min: 1 })
     .withMessage("Price is require"),
 
     body("inv_year")
@@ -137,13 +115,13 @@ validate.newInventoryRules = () => {
 
     body("inv_miles")
     .trim()
-    .notEmpty()
-    .withMessage("Miles is required"),
+    .isInt({ min: 1 })
+    .withMessage("Mileage must be 0 or greater."),
 
     body("inv_color")
     .trim()
     .notEmpty()
-    .withMessage()
+    .withMessage("Color is required")
   ]
 }
 
