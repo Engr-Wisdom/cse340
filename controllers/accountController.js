@@ -85,14 +85,17 @@ async function loginAccount(req, res, next) {
 
 async function buildManagement(req, res, next) {
     const nav = await utilities.getNav()
+    const accountData = res.locals.accountData
+
     res.render("account/management", {
         title: "Account Management",
         nav,
+        accountData,
         errors: null,
     })
 }
 
-async function buildUpdate(req, res, next) {
+async function buildUpdateAccount(req, res, next) {
     try {
         const account_id = parseInt(req.params.account_id)
 
@@ -121,7 +124,7 @@ async function buildUpdate(req, res, next) {
 
 async function updateAccount(req, res, next) {
     try {
-        const { account_id, account_firstname, account_lastname, account_email } = req.body()
+        const { account_id, account_firstname, account_lastname, account_email } = req.body;
         const parsedId = parseInt(account_id)
 
         if (parsedId !== res.locals.accountData.account_id) {
@@ -148,7 +151,7 @@ async function updateAccount(req, res, next) {
 
         } else {
             req.flash("notice", "Updated failed. Please try again.")
-            res.redirect(`account/update/${account_id}`)
+            res.redirect(`/account/update/${account_id}`)
         }
 
     } catch(error) {
@@ -185,7 +188,7 @@ async function changePassword(req, res, next) {
 
 async function logout(req, res, next) {
     res.clearCookie("jwt")
-    res.flash("notice", "You have been logged out")
+    req.flash("notice", "You have been logged out")
     res.redirect("/")
 }
 
@@ -195,7 +198,7 @@ module.exports = {
     registerAccount, 
     loginAccount, 
     buildManagement, 
-    buildUpdate, 
+    buildUpdateAccount, 
     updateAccount, 
     changePassword, 
     logout 

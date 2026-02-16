@@ -27,17 +27,17 @@
             <% } %>
 
             <h2>Update Account Information</h2>
-            <form action="/accoount/update" method="post" id="accountUpdateForm">
+            <form action="/account/update" method="post" id="accountUpdateForm">
                 <label for="account_firstname">First Name *</label>
-                <input type="text" name="account_firstname" id="account_firstname" value="<%= account_fistname || '' %>" required>
+                <input type="text" name="account_firstname" id="account_firstname" value="<%= account_firstname || '' %>" required>
 
                 <label for="account_lastname">Last Name *</label>
-                <input type="text" name="account_lastname" id="account_lastname" value="<%= account_fistname || '' %>" required>
+                <input type="text" name="account_lastname" id="account_lastname" value="<%= account_lastname || '' %>" required>
 
                 <label for="account_email">Email *</label>
                 <input type="text" name="account_email" id="account_email" value="<%= account_email || '' %>" required>
 
-                <input type="hidden" name="account_lastname" value="<%= account_id %>">
+                <input type="hidden" name="account_id" value="<%= account_id %>">
                 <button type="submit">Update Account</button>
             </form>
 
