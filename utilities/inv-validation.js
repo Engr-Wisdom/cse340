@@ -58,7 +58,7 @@ validate.inventoryRules = () => {
 
         body("inv_price")
         .trim()
-        .notEmpty()
+        .isFloat({ min: 1 })
         .withMessage("Price is require"),
 
         body("inv_year")
@@ -68,7 +68,7 @@ validate.inventoryRules = () => {
 
         body("inv_miles")
         .trim()
-        .notEmpty()
+        .isInt({ min: 1 })
         .withMessage("Miles is required"),
 
         body("inv_color")
@@ -157,7 +157,7 @@ validate.checkUpdateData = async (req, res, next) => {
             title: "Update Inventory",
             nav,
             classificationList,
-            inv,
+            inv_id,
             errors,
             ...req.body
         })

@@ -1,9 +1,5 @@
 const express = require("express")
 require("dotenv").config()
-require("dotenv").config()
-console.log('SESSION_SECRET exists:', !!process.env.SESSION_SECRET)
-console.log('SESSION_SECRET length:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 0)
-// Don't log the actual secret value for security reasons
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
 const session = require("express-session")

@@ -12,13 +12,12 @@ async function getInventoryByClassificationId(classification_id) {
             ON i.classification_id = c.classification_id
             WHERE i.classification_id = $1`,
             [classification_id]
-        )
-        
+        )        
         return data
 
     } catch(error) {
         console.error("getclassificationbyid error", error)
-        return []
+        return { rows: []}
     }
 }
 
@@ -94,11 +93,19 @@ async function updateInventory(
 ) {
     try {
         const sql = `
-            INSERT INTO inventory (
-                inv_id, inv_make, inv_model, inv_description, inv_image,
-                inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id
-            ) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+            UPDATE inventory
+            SET 
+                inv_make = $1, 
+                inv_model = $2, 
+                inv_description = $3, 
+                inv_image = $4,
+                inv_thumbnail = $5, 
+                inv_price = $6, 
+                inv_year = $7, 
+                inv_miles = $8, 
+                inv_color = $9, 
+                classification_id = $10
+            WHERE inv_id = $11
             RETURNING *
         `
         const result = await pool.query(sql, [

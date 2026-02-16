@@ -35,9 +35,19 @@ function buildInventoryList(data) {
     data.forEach(element => {
         console.log(element.inv_id + ", " + element.inv_model)
         dataTable += `<tr><td>${element.inv_make} ${element.inv_model}</td>`
-        dataTable += `<td><a href="inv/update/${element.inv_id}" title="Click to update">Modify</a></td>`
-        dataTable += `<td><a href="inv/delete/${element.inv_id}" title="Click to delete">Delete</td></tr>`
+        dataTable += `<td><a href="/inv/update/${element.inv_id}" title="Click to update">Modify</a></td>`
+        dataTable += `<td><a href="/inv/delete/${element.inv_id}" title="Click to delete">Delete</a></td></tr>`
+
     })
     dataTable += "</tbody>"
     inventoryDisplay.innerHTML = dataTable
 }
+
+const form = document.getElementById("updateForm")
+const updateBtn = document.querySelector("button")
+
+updateBtn.disabled = true;
+
+form.addEventListener("change", () => {
+    updateBtn.disabled = false
+})

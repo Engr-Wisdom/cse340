@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head") %>
-<link rel="stylesheet" media="screen" href="/css/account.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" media="screen" href="/css/account.css">
+</head>
 
 <body>
     <div id="wrapper">
@@ -13,15 +18,22 @@
 
             <%- messages() %>
 
-            <% if (typeof errors !== "undefined" && errors) { %>
-                <ul class="notice">
-                    <% errors.array().forEach(error => { %>
-                        <li><%= error.msg %></li>
-                    <% }) %>
-                </ul>
-            <% } %>
+            <% if (locals.accountData) { %>
+                <h2>Welcome <%= accountData.account_firstname %></h2>
+                <p><a href="/account/update/<%= accountData.account_id %>">Update account Information</a></p>
 
-            <h2>You're logged in</h2>
+                <% if (accountData.account_type == "Admin" || accountData.account_type == "Employee") { %>
+                    <h3>Inventory Management</h3>
+                    <p><a href="/inv/">Manage Inventory</a></p>
+                <% } %>
+
+                <div class="account-details">
+                    <p><strong>First Name:</strong> <%= accountData.account_firstname %></p>
+                    <p><strong>Last Name:</strong> <%= accountData.account_lastname %></p>
+                    <p><strong>Email:</strong> <%= accountData.account_email %></p>
+                    <p><strong>Account Type:</strong> <%= accountData.account_type %></p>
+                </div>
+            <% } %>
         </main>
 
         <%- include("../partials/footer") %>

@@ -1,6 +1,7 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const validate = {}
+const accountModel = require("../models/account-model")
 
 /* *********************
 * Login Data Validation Rules
@@ -115,6 +116,80 @@ validate.checkRegData = async (req, res, next) => {
         })
         return
     } 
+    next()
+}
+
+validate.updateRules = () => {
+    return [
+        body('account_firstname')
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("First name is required")
+        .isLength({ min: 1 })
+        .withMessage("First name must be atlest 1 character"),
+
+        body("account_lastname")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Last Name is required")
+        .isLength({ min: 1 })
+        .withMessage("Last Name must be atleast 1 character"),
+
+        body("account_email")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Email is required")
+        .normalizeEmail()
+        .custom(async (email, { req }) => {
+            const accountId = req.body.account_id
+            const account = await accountModel.getAccountById(accountId)
+
+            if (email === account.account_email) {
+                return true
+            }
+
+            const emailExist = await accountModel.checkExistingEmail(email)
+            if (emailExist) {
+                throw new Error("Email already exists. Please use a different email.")
+            }
+        })
+    ]
+}
+
+validate.passwordRules = () => {
+    return [
+        body("account_password")
+        .trim()
+        .notEmpty()
+        .withMessage("Password required")
+        .isStrongPassword({
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1
+        })
+        .withMessage(
+            "Password must be atleast 8 characters and contain at least 1 number, 1 uppercase letter, 1 lowercase letter and 1 special character"
+        )
+    ]
+}
+
+validate.checkValidation = async (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: errors,
+            ...req.body
+        })
+        return
+    }
     next()
 }
 

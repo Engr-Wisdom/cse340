@@ -105,6 +105,30 @@ Util.buildClassificationList = async (classification_id = null) => {
 * Middleware to check token validity
 **************************** */
 
+// Util.checkJWTToken = (req, res, next) => {
+//     if (req.cookies.jwt) {
+//         jwt.verify(
+//             req.cookies.jwt,
+//             process.env.ACCESS_TOKEN_SECRET,
+//             function (err, accountData) {
+//                 if (err) {
+//                     req.flash("Please log in")
+//                     res.clearCookie("jwt")
+//                     return res.redirect("/account/login")
+//                 }
+//                 res.locals.accountData = accountData
+//                 res.locals.loggedin = 1
+//                 next()
+//             })
+            
+//     } else {
+//         next()
+//     }
+// }
+
+/* *************************** 
+* Middleware to check token validity
+**************************** */
 Util.checkJWTToken = (req, res, next) => {
     if (req.cookies.jwt) {
         jwt.verify(
@@ -112,15 +136,16 @@ Util.checkJWTToken = (req, res, next) => {
             process.env.ACCESS_TOKEN_SECRET,
             function (err, accountData) {
                 if (err) {
-                    req.flash("Please log in")
+                    // Just clear the cookie and continue - don't redirect
+                    console.log("JWT Error:", err.message)
                     res.clearCookie("jwt")
-                    return res.redirect("/account/login")
+                    return next()
                 }
+                console.log("JWT Verified - AccountData:", accountData) // Debug log
                 res.locals.accountData = accountData
                 res.locals.loggedin = 1
                 next()
             })
-            
     } else {
         next()
     }

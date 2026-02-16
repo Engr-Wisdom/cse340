@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head") %>
-<link rel="stylesheet" media="screen" href="/css/inventory.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" media="screen" href="/css/inventory.css">
+</head>
 
 <body>
     <div id="wrapper">
@@ -22,25 +27,22 @@
             <% } %>
 
             <form action="/inv/delete" method="post">
-                <%- classificationList %>
 
                 <label for="inv_make">Make *</label>
-                <input type="text" name="inv_make" value="<%= inv_make || "" %>" readonly>
+                <input type="text" name="inv_make" value="<%= inv_make || '' %>" readonly>
 
                 <label for="inv_model">Model *</label>
-                <input type="text" name="inv_model" value="<%= inv_model || "" %>" readonly>
+                <input type="text" name="inv_model" value="<%= inv_model || '' %>" readonly>
 
                 <label for="inv_price">Price *</label>
-                <input type="number" name="inv_price" value="<%= inv_price || "" %>" readonly>
+                <input type="number" name="inv_price" value="<%= inv_price || '' %>" readonly>
 
                 <label for="inv_year">Year *</label>
-                <input type="number" name="inv_year" value="<%= inv_year || "" %>" readonly>
+                <input type="number" name="inv_year" value="<%= inv_year || '' %>" readonly>
 
                 <button type="submit">Delete Vehicle</button>
 
-                <input type="hidden" name="inv_id" <% if (locals.inv_id) { %>
-                    value="<% locals.inv_id %>"
-                <% } %>>
+                <input type="hidden" name="inv_id" value="<%= inv_id %>">
             </form>
             <p>Confirm Delete - The delete is permanent.</p>
         </main>
