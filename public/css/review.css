@@ -1,0 +1,72 @@
+/* Reviews Styling */
+.reviews-section {
+    margin-top: 40px;
+    padding: 20px;
+    border-top: 2px solid #ddd;
+}
+
+.btn-add-review {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.average-rating {
+    font-size: 18px;
+    margin: 20px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.review-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.review-rating {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.review-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.review-body {
+    line-height: 1.6;
+}
+
+.btn-delete {
+    padding: 5px 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+.delete-form {
+    text-align: right;
+}

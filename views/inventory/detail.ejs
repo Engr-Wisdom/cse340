@@ -15,6 +15,42 @@
 
         <main>
             <%- detailHtml %>
+            <section class="reviews-section">
+                <h2>Customer Reviews</h2>
+
+                <% if (locals.accountData) { %>
+                    <a href="/review/add/<%= inv_id %>" class="add-review-button">Write a Review</a>
+                <% } %>
+
+                <% if (locals.reviews && reviews.length > 0) { %>
+                    <div class="average-rating">
+                        <strong>Average Rating:</strong> <%= averageRating %> / 5
+                    </div>
+
+                    <div class="review_list">
+                        <% reviews.forEach(review =>  { %>
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <strong><%= review.account_firstname %> <%= review.account_lastname %></strong>
+                                    <span class="review-rating">Rating: <%= new Date(review.review_date).toLocaleDateString() %></span>
+                                </div>
+                                <div class="review-body">
+                                    <p><%= review.review_text %></p>
+                                </div>
+
+                                <% if (locals.accountData && accountData.account_id === review.account_id) { %>
+                                    <form action="/review/delete/<%= review.review_id %>" method="post" class="delete-form">
+                                        <input type="hidden" name="inv_id" value="<%= inv_id %>">
+                                        <button type="submit" class="delete-btn" onclick="return confirm('Delete this review?')">Delete</button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <p>No review yet.</p>
+                <% } %>
+            </section>
         </main>
 
         <%- include("../partials/footer") %>

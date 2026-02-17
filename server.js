@@ -41,6 +41,7 @@ app.use(utilities.checkJWTToken)
 app.use(require("./routes/static"));
 app.use("/inv", require("./routes/inventoryRoute"))
 app.use("/account", require("./routes/accountRoute"))
+app.use("/review", require("./routes/reviewRoute"))
 
 const expressLayouts = require("express-ejs-layouts");
 

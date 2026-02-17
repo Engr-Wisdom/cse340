@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/index")
+const reviewModel = require("../models/review-model")
 const invCont = {}
 
 
@@ -33,11 +34,16 @@ invCont.buildInventoryDetail = async (req, res, next) => {
         }
         const nav = await utilities.getNav()
         const detailHtml = await utilities.buildInventoryDetailHTML(vehicle)
+        const reviews = await reviewModel.getReviewsByInvId(inventory_id)
+        const average = await reviewModel.getAverageRating(inventory_id)
 
         res.render("inventory/detail", {
             title: `${vehicle.inv_make} ${vehicle.inv_model}`,
             nav,
-            detailHtml
+            detailHtml,
+            inv_id: inventory_id,
+            reviews: reviews,
+            averageRating: Math.round(average * 10) / 10
         })
     } catch(err) {
         next(err)
