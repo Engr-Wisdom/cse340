@@ -49,8 +49,23 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
         return result.rows[0]
 
     } catch(error) {
-        console.error(`pdateAccount error: ${error}`)
+        console.error(`updateAccount error: ${error}`)
     }
 }
 
-module.exports = { registerAccount, getAccountByEmail, getAccountById, updateAccount }
+async function updatePassword(account_password, account_id) {
+    try {
+        const result = await pool.query(
+            "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING account_id", 
+            [account_password, account_id]
+        )
+
+        return result.rowCount > 0
+
+    } catch(error) {
+        console.error("updatePassword errors: " + error)
+        return false
+    }
+}
+
+module.exports = { registerAccount, getAccountByEmail, getAccountById, updateAccount, updatePassword }

@@ -166,11 +166,11 @@ async function changePassword(req, res, next) {
 
         if (parseId !== res.locals.accountData.account_id) {
             req.flash("notice", "You can only change your own password")
-            res.redirect("/account/")
+            return res.redirect("/account/")
         }
 
         const hashedPassword = await bcrypt.hash(account_password, 10)
-        const updateResult = await accountModel.updateAccount(parseId, hashedPassword)
+        const updateResult = await accountModel.updatePassword(hashedPassword, parseId)
 
         if (updateResult) {
             req.flash("notice", "Password changed successfully")
